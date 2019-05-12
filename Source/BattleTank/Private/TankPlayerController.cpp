@@ -4,6 +4,11 @@
 #include "TankPlayerController.h"
 #include "Tank.h"
 
+void ATankPlayerController::BeginPlay()
+{
+	Super::BeginPlay();
+}
+
 ATank* ATankPlayerController::GetControlledTank() const
 {
 	return Cast<ATank>(GetPawn());
