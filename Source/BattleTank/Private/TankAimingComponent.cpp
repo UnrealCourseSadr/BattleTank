@@ -4,6 +4,7 @@
 #include "TankAimingComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "TankBarrel.h"
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
@@ -12,10 +13,10 @@ UTankAimingComponent::UTankAimingComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
-	
+
 }
 
-void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent* BarrelToSet)
+void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
 	Barrel = BarrelToSet;
 }
@@ -27,7 +28,7 @@ void UTankAimingComponent::BeginPlay()
 	Super::BeginPlay();
 
 	// ...
-	
+
 }
 
 
@@ -45,7 +46,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, const float LaunchSpeed)
 	FVector LaunchVelocity{};
 	FVector StartLocation{ Barrel->GetSocketLocation(FName("Projectile")) };
 
-	if (UGameplayStatics::SuggestProjectileVelocity(
+	bool bHaveAimSolution{ UGameplayStatics::SuggestProjectileVelocity(
 		this,
 		LaunchVelocity,
 		StartLocation,
@@ -58,10 +59,31 @@ void UTankAimingComponent::AimAt(FVector HitLocation, const float LaunchSpeed)
 		FCollisionResponseParams::DefaultResponseParam,
 		TArray<AActor*>(),
 		false
-	))
+	) };
+	if (bHaveAimSolution)
 	{
 		FVector AimDirection{ LaunchVelocity.GetSafeNormal() };
-	}
 
+		MoveBarrelTowards(AimDirection);
+		
+
+		// If ready then fire
+	}
 	
+	// If no solution then do nothing
+}
+
+
+void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
+{
+	// Calculate the rotation difference between 
+	// current barrel rotation and the desired rotation(AimDirection) to launch the projectile
+	FRotator BarrelRotator{ Barrel->GetForwardVector().Rotation() };
+	FRotator AimAsRotator{ AimDirection.Rotation() };
+	FRotator DeltaRotator = BarrelRotator - AimAsRotator;
+
+	// Move the barrel according to the rotation difference this frame
+	Barrel->Elevate(5);
+
+	// given a max elevation speed, and the frame time
 }
