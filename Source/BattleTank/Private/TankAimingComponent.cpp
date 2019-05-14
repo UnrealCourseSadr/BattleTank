@@ -3,6 +3,7 @@
 
 #include "TankAimingComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
@@ -38,7 +39,29 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	// ...
 }
 
-void UTankAimingComponent::AimAt(FVector WorldSpaceAim)
+void UTankAimingComponent::AimAt(FVector HitLocation, const float LaunchSpeed)
 {
-	FVector BarrelLocation{ Barrel->GetComponentLocation() };
+	if (!Barrel) { return; }
+	FVector LaunchVelocity{};
+	FVector StartLocation{ Barrel->GetSocketLocation(FName("Projectile")) };
+
+	if (UGameplayStatics::SuggestProjectileVelocity(
+		this,
+		LaunchVelocity,
+		StartLocation,
+		HitLocation,
+		LaunchSpeed,
+		false,
+		0.f,
+		0.f,
+		ESuggestProjVelocityTraceOption::DoNotTrace,
+		FCollisionResponseParams::DefaultResponseParam,
+		TArray<AActor*>(),
+		false
+	))
+	{
+		FVector AimDirection{ LaunchVelocity.GetSafeNormal() };
+	}
+
+	
 }
