@@ -29,7 +29,8 @@ void ATankPlayerController::AimTowardsCrosshair()
 	FVector HitLocation;
 	if (GetSightRayHitLocation(HitLocation))
 	{
-		// TODO Tell controlled tank to aim at this point
+		// Tell controlled tank to aim at this point
+		GetControlledTank()->AimAt(HitLocation);
 	}
 }
 
@@ -47,9 +48,8 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) cons
 	{
 		// Line-trace along the look direction and see what we hit(up to max range)
 		GetLookVectorHitLocation(LookDirection, OutHitLocation);
+		return true;
 	}
-
-	
 
 	return false;
 }
@@ -67,7 +67,7 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 	FHitResult HitResult{};
 	FVector StartLocation{ PlayerCameraManager->GetCameraLocation() };
 	FVector EndLocation{ StartLocation + LookDirection * MaxAimRange };
-	FCollisionQueryParams TraceParams = FCollisionQueryParams(FName(TEXT("")), true, GetPawn());
+	FCollisionQueryParams TraceParams = FCollisionQueryParams(FName(TEXT("")), false, GetPawn());
 
 	if (GetWorld()->LineTraceSingleByChannel(
 		HitResult,
