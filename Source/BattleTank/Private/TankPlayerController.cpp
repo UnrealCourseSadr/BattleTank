@@ -47,11 +47,12 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) cons
 	if (GetLookDirection(ScreenLocation, LookDirection))
 	{
 		// Line-trace along the look direction and see what we hit(up to max range)
-		GetLookVectorHitLocation(LookDirection, OutHitLocation);
-		return true;
+		return GetLookVectorHitLocation(LookDirection, OutHitLocation);
 	}
-
-	return false;
+	else
+	{
+		return false;
+	}
 }
 
 // Deproject the screen position to a world direction
@@ -82,7 +83,7 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 	}
 	else
 	{
-		OutHitLocation = FVector{ 0.f };
+		OutHitLocation = FVector::ZeroVector;
 		return false;
 	}
 
