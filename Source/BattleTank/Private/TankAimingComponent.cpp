@@ -63,17 +63,9 @@ void UTankAimingComponent::AimAt(FVector HitLocation, const float LaunchSpeed)
 	if (bHaveAimSolution)
 	{
 		FVector AimDirection{ LaunchVelocity.GetSafeNormal() };
-
 		MoveBarrelTowards(AimDirection);
 		
-		float Time = GetWorld()->GetTimeSeconds();
-		UE_LOG(LogTemp, Warning, TEXT("%f : Found %s"), Time, *HitLocation.ToString())
 		// If ready then fire
-	}
-	else
-	{
-		float Time = GetWorld()->GetTimeSeconds();
-		UE_LOG(LogTemp, Warning, TEXT("%f : Aim not solved"), Time)
 	}
 }
 
@@ -84,10 +76,10 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	// current barrel rotation and the desired rotation(AimDirection) to launch the projectile
 	FRotator BarrelRotator{ Barrel->GetForwardVector().Rotation() };
 	FRotator AimAsRotator{ AimDirection.Rotation() };
-	FRotator DeltaRotator = BarrelRotator - AimAsRotator;
+	FRotator DeltaRotator = AimAsRotator - BarrelRotator;
 
 	// Move the barrel according to the rotation difference this frame
-	Barrel->Elevate(5);
+	Barrel->Elevate(DeltaRotator.Pitch);
 
 	// given a max elevation speed, and the frame time
 }
