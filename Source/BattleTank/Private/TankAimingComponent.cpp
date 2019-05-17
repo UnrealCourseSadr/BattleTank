@@ -77,7 +77,6 @@ void UTankAimingComponent::AimAt(FVector HitLocation, const float LaunchSpeed)
 	}
 }
 
-
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
 	// Calculate the rotation difference between 
