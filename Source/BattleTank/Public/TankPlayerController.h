@@ -23,13 +23,13 @@ public:
 	
 
 private:
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	float CrossHairLocationX{ 0.5f };
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	float CrossHairLocationY{ 0.33333f };
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	float MaxAimRange{ 1000000.f };
 
 	ATank* GetControlledTank() const;
