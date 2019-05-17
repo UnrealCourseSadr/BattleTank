@@ -5,6 +5,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "TankBarrel.h"
+#include "TankTurret.h"
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
@@ -21,6 +22,10 @@ void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 	Barrel = BarrelToSet;
 }
 
+void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
+{
+	Turret = TurretToSet;
+}
 
 // Called when the game starts
 void UTankAimingComponent::BeginPlay()
@@ -42,7 +47,7 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 
 void UTankAimingComponent::AimAt(FVector HitLocation, const float LaunchSpeed)
 {
-	if (!Barrel) { return; }
+	if (!Barrel || !Turret) { return; }
 	FVector LaunchVelocity{};
 	FVector StartLocation{ Barrel->GetSocketLocation(FName("Projectile")) };
 
@@ -64,6 +69,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, const float LaunchSpeed)
 	{
 		FVector AimDirection{ LaunchVelocity.GetSafeNormal() };
 		MoveBarrelTowards(AimDirection);
+		MoveTurretTowards(AimDirection);
 		
 		// If ready then fire
 	}
@@ -76,10 +82,22 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	// current barrel rotation and the desired rotation(AimDirection) to launch the projectile
 	FRotator BarrelRotator{ Barrel->GetForwardVector().Rotation() };
 	FRotator AimAsRotator{ AimDirection.Rotation() };
-	FRotator DeltaRotator = AimAsRotator - BarrelRotator;
+	FRotator DeltaRotator{ AimAsRotator - BarrelRotator };
 
 	// Move the barrel according to the rotation difference this frame
-	Barrel->Elevate(DeltaRotator.Pitch);
-
 	// given a max elevation speed, and the frame time
+	Barrel->Elevate(DeltaRotator.Pitch);
+}
+
+void UTankAimingComponent::MoveTurretTowards(FVector AimDirection)
+{
+	// Calculate the rotation difference between 
+	// current turret rotation and the desired rotation(AimDirection) to launch the projectile
+	FRotator TurretRotator{ Turret->GetForwardVector().Rotation() };
+	FRotator AimAsRotator{ AimDirection.Rotation() };
+	FRotator DeltaRotator{ AimAsRotator - TurretRotator };
+
+	// Move the turret according to the rotation difference this frame
+	// given a max azimuth speed, and the frame time
+	Turret->Turn(DeltaRotator.Yaw);
 }
