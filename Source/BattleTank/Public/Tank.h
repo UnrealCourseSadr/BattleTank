@@ -41,7 +41,7 @@ protected:
 	UTankAimingComponent* TankAimingComponent{ nullptr };
 
 	UPROPERTY(EditAnywhere, Category = "Firing")
-	float LaunchSpeed{ 8000.f }; // TODO Find sensible default
+	float LaunchSpeed{ 4000.f }; // TODO Find sensible default
 
 	UPROPERTY(EditAnywhere, Category = "Setup")
 	TSubclassOf<AProjectile> ProjectileBlueprint;
