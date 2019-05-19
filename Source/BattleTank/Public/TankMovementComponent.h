@@ -27,6 +27,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Movement")
 	void IntendTurnRight(float Throw);
 
+	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
 private:
 	UTankTrack* LeftTrack{ nullptr };
 	UTankTrack* RightTrack{ nullptr };

@@ -21,6 +21,8 @@ public:
 
 	virtual void Tick(float DeltaSeconds) override;
 
-private:
+protected:
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float AcceptanceRadius{ 1000.f };
 
 };
