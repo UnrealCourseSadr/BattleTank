@@ -24,12 +24,6 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UFUNCTION(BlueprintCallable, Category = "Setup")
-	void SetBarrelReference(UTankBarrel* BarrelToSet);
-
-	UFUNCTION(BlueprintCallable, Category = "Setup")
-	void SetTurretReference(UTankTurret* TurretToSet);
-
 	void AimAt(const FVector& HitLocation);
 
 	UFUNCTION(BlueprintCallable, Category = "Firing")
@@ -55,6 +49,4 @@ protected:
 	float ReloadTimeInSeconds{ 3.f };
 
 	double LastFiringTime{ 0. };
-
-	UTankBarrel* Barrel{ nullptr };
 };
