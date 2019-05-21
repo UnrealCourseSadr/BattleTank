@@ -14,13 +14,14 @@ ATank::ATank()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
+	UE_LOG(LogTemp, Warning, TEXT("PISHKUL: Tank C++ Constructor"))
 }
 
 // Called when the game starts or when spawned
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
-
+	UE_LOG(LogTemp, Warning, TEXT("PISHKUL: Tank C++ Being Play"))
 }
 
 // Called to bind functionality to input
@@ -32,21 +33,21 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void ATank::AimAt(const FVector& HitLocation)
 {
-	if (!TankAimingComponent) { return; }
+	if (!ensure(TankAimingComponent)) { return; }
 	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
 }
 
 void ATank::Fire()
 {
 	bool bIsReloaded{ FPlatformTime::Seconds() - LastFiringTime > ReloadTimeInSeconds };
-	if (!ProjectileBlueprint) { return; }
-	if (!TankAimingComponent) { return; }
+	if (!ensure(ProjectileBlueprint)) { return; }
+	if (!ensure(TankAimingComponent)) { return; }
 
 	if (bIsReloaded)
 	{
 		// Spawn a projectile at the socket location on the barrel
 		UTankBarrel* Barrel{ TankAimingComponent->GetBarrel() };
-		if (!Barrel) { return; }
+		if (!ensure(Barrel)) { return; }
 		AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint,
 			Barrel->GetSocketLocation(FName("Projectile")),
 			Barrel->GetSocketRotation(FName("Projectile")));
