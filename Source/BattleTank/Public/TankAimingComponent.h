@@ -48,11 +48,15 @@ protected:
 	UTankBarrel* Barrel{ nullptr };
 	UTankTurret* Turret{ nullptr };
 
+	FVector AimDirection{ 0.f };
+
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<AProjectile> ProjectileBlueprint{ nullptr };
 
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState{ EFiringState::Reloading };
+
+	bool IsBarrelMoving() const;
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")

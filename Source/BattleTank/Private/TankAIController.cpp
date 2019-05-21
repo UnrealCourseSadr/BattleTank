@@ -3,6 +3,7 @@
 
 #include "TankAIController.h"
 #include "TankAimingComponent.h"
+#include "Tank.h"
 #include "Engine/World.h"
 #include "GameFramework/PlayerController.h"
 
@@ -16,7 +17,7 @@ void ATankAIController::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
-	APawn* PlayerTank = GetWorld()->GetFirstPlayerController()->GetPawn();
+	ATank* PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 	if (!ensure(PlayerTank) || !ensure(TankAimingComponent)) { return; }
 
 	// Move towards the player
@@ -26,5 +27,5 @@ void ATankAIController::Tick(float DeltaSeconds)
 	TankAimingComponent->AimAt(PlayerTank->GetActorLocation());
 
 	// TODO Fire if ready
-	//TankAimingComponent->Fire();
+	TankAimingComponent->Fire();
 }
