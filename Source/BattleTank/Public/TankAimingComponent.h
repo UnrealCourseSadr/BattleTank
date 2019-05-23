@@ -11,7 +11,8 @@ enum class EFiringState : uint8
 {
 	Locked,
 	Aiming,
-	Reloading
+	Reloading,
+	OutOfAmmo
 };
 
 class UTankBarrel;
@@ -43,6 +44,9 @@ public:
 
 	EFiringState GetFiringState() const;
 
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	int32 GetRoundsLeft() const;
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -65,6 +69,9 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState{ EFiringState::Reloading };
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	int32 RoundsLeft{ 10 };
 
 private:
 	void MoveBarrelTowards(FVector AimDirection);
