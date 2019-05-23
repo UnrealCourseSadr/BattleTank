@@ -45,6 +45,14 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	float LaunchSpeed{ 4000.f };
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	float ReloadTimeInSeconds{ 3.f };
+
+	double LastFiringTime{ 0. };
+
 	UTankBarrel* Barrel{ nullptr };
 	UTankTurret* Turret{ nullptr };
 
@@ -56,17 +64,9 @@ protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState{ EFiringState::Reloading };
 
-	bool IsBarrelMoving() const;
-
 private:
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float LaunchSpeed{ 4000.f };
-
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float ReloadTimeInSeconds{ 3.f };
-
-	double LastFiringTime{ 0. };
-
 	void MoveBarrelTowards(FVector AimDirection);
 	void MoveTurretTowards(FVector AimDirection);
+
+	bool IsBarrelMoving() const;
 };
