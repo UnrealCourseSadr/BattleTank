@@ -122,7 +122,7 @@ void UTankAimingComponent::MoveTurretTowards(FVector AimDirection)
 
 	// Move the turret according to the rotation difference this frame
 	// given a max azimuth speed, and the frame time
-	Turret->Turn(DeltaRotator.Yaw);
+	FMath::Abs(DeltaRotator.Yaw) < 180.f ? Turret->Turn(DeltaRotator.Yaw) : Turret->Turn(-DeltaRotator.Yaw);
 }
 
 void UTankAimingComponent::Fire()
