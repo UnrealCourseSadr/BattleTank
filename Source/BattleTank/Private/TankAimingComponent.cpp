@@ -65,7 +65,7 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if (RoundsLeft == 0)
+	if (RoundsLeft <= 0)
 	{
 		FiringState = EFiringState::OutOfAmmo;
 	}
@@ -144,7 +144,7 @@ void UTankAimingComponent::Fire()
 	if (!ensure(Barrel)) { return; }
 	if (!ensure(ProjectileBlueprint)) { return; }
 	
-	if (FiringState != EFiringState::Reloading && RoundsLeft > 0)
+	if (FiringState == EFiringState::Aiming || FiringState == EFiringState::Locked)
 	{
 		// Spawn a projectile at the socket location on the barrel
 		AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint,
