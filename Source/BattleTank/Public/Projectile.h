@@ -25,6 +25,9 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float ProjectileDamage{ 20.f };
+
 	UProjectileMovementComponent* MovementComponent{ nullptr };
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")

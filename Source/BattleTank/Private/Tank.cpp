@@ -24,3 +24,12 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
+float ATank::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	
+	int32 DamagePoints{ FPlatformMath::RoundToInt(DamageAmount) };
+	int32 DamageToApply = FMath::Clamp<int32>(DamagePoints, 0, CurrentHealth);
+	CurrentHealth -= DamageToApply;
+	return DamageToApply;
+}
+
