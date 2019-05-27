@@ -28,8 +28,8 @@ public:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
-	UTankBarrel* GetBarrel() const;
-	UTankTurret* GetTurret() const;
+	UTankBarrel* GetBarrel() const { return Barrel; }
+	UTankTurret* GetTurret() const { return Turret; }
 
 	UFUNCTION(BlueprintCallable, Category = "Aiming")
 	void Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
@@ -62,8 +62,6 @@ protected:
 	UTankBarrel* Barrel{ nullptr };
 	UTankTurret* Turret{ nullptr };
 
-	FVector AimDirection{ 0.f };
-
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<AProjectile> ProjectileBlueprint{ nullptr };
 
@@ -74,6 +72,8 @@ protected:
 	int32 RoundsLeft{ 10 };
 
 private:
+	FVector AimDirection{ 0.f };
+
 	void MoveBarrelTowards(FVector AimDirection);
 	void MoveTurretTowards(FVector AimDirection);
 

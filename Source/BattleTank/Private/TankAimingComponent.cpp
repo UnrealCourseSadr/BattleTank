@@ -34,16 +34,6 @@ bool UTankAimingComponent::IsBarrelMoving() const
 	return !BarrelForwardVector.Equals(AimDirection, 0.01f);
 }
 
-UTankBarrel* UTankAimingComponent::GetBarrel() const
-{
-	return Barrel;
-}
-
-UTankTurret* UTankAimingComponent::GetTurret() const
-{
-	return Turret;
-}
-
 EFiringState UTankAimingComponent::GetFiringState() const
 {
 	return FiringState;
