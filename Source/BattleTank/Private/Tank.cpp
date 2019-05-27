@@ -17,6 +17,11 @@ void ATank::BeginPlay()
 	Super::BeginPlay();
 }
 
+float ATank::GetHealthPercent() const
+{
+	return static_cast<float>(CurrentHealth) / StartingHealth;
+}
+
 // Called to bind functionality to input
 void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {

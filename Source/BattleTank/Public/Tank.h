@@ -15,6 +15,9 @@ public:
 	// Sets default values for this pawn's properties
 	ATank();
 
+	UFUNCTION(BlueprintPure, Category = "Health")
+	float GetHealthPercent() const;
+
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
@@ -28,6 +31,6 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	int32 StartingHealth{ 100 };
 
-	UPROPERTY(EditDefaultsOnly, Category = "Health")
+	UPROPERTY(VisibleAnywhere, Category = "Health")
 	int32 CurrentHealth{ StartingHealth };
 };
