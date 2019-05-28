@@ -27,4 +27,10 @@ protected:
 
 	UTankAimingComponent* TankAimingComponent{ nullptr };
 
+	UFUNCTION()
+	void OnTankDeath();
+
+private:
+	virtual void SetPawn(APawn* InPawn) override;
+
 };
