@@ -96,12 +96,12 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
 	if (bHaveAimSolution)
 	{
 		AimDirection = LaunchVelocity.GetSafeNormal();
-		MoveBarrelTowards(AimDirection);
-		MoveTurretTowards(AimDirection);
+		MoveBarrelTowards();
+		MoveTurretTowards();
 	}
 }
 
-void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
+void UTankAimingComponent::MoveBarrelTowards()
 {
 	if (!ensure(Barrel)) { return; }
 	// Calculate the rotation difference between 
@@ -115,7 +115,7 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	Barrel->Elevate(DeltaRotator.Pitch);
 }
 
-void UTankAimingComponent::MoveTurretTowards(FVector AimDirection)
+void UTankAimingComponent::MoveTurretTowards()
 {
 	if (!ensure(Turret)) { return; }
 	// Calculate the rotation difference between 

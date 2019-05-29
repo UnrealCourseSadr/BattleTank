@@ -74,8 +74,8 @@ protected:
 private:
 	FVector AimDirection{ 0.f };
 
-	void MoveBarrelTowards(FVector AimDirection);
-	void MoveTurretTowards(FVector AimDirection);
+	void MoveBarrelTowards();
+	void MoveTurretTowards();
 
 	bool IsBarrelMoving() const;
 };
