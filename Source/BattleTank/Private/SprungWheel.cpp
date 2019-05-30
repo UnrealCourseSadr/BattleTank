@@ -15,18 +15,16 @@ ASprungWheel::ASprungWheel()
 	Wheel = CreateDefaultSubobject<UStaticMeshComponent>(FName("Wheel"));
 	MassWheelConstraint = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("Physics Constraint"));
 	if (!ensure(Mass && Wheel && MassWheelConstraint)) { return; }
-	SetRootComponent(Mass);
-
-	Wheel->SetupAttachment(Mass);
-
-	MassWheelConstraint->SetupAttachment(Mass);
+	SetRootComponent(MassWheelConstraint);
+	Mass->SetupAttachment(RootComponent);
+	Wheel->SetupAttachment(RootComponent);
+	
 }
 
 // Called when the game starts or when spawned
 void ASprungWheel::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame
