@@ -21,22 +21,17 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void SetThrottle(float Throttle);
 
-	void DriveTrack();
+	void DriveTrack(float CurrentThrottle);
 
 	// Max force per track, in newtons
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float MaxDrivingForce{ 40000000.f };
 
 protected:
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFucntion) override;
-
-	void ApplySidewaysForce();
-
 	virtual void BeginPlay() override;
 
-	float CurrentThrottle{ 0.f };
+	TArray<class ASprungWheel*> GetWheels() const;
 
-private:
-	UFUNCTION()
-	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFucntion) override;
+
 };
