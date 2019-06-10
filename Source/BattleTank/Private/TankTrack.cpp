@@ -33,9 +33,8 @@ TArray<ASprungWheel*> UTankTrack::GetWheels() const
 			AActor* actor{ Cast<USpawnPoint>(Component)->GetSpawnedActor() };
 			if (actor && actor->IsA<ASprungWheel>())
 			{
-				Wheels.Push(Cast<ASprungWheel>(Cast<USpawnPoint>(Component)->GetSpawnedActor()));
+				Wheels.Add(Cast<ASprungWheel>(Cast<USpawnPoint>(Component)->GetSpawnedActor()));
 			}
-			
 		}
 	}
 	return Wheels;
