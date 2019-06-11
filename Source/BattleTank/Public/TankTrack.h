@@ -25,7 +25,7 @@ public:
 
 	// Max force per track, in newtons
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-	float MaxDrivingForce{ 4000000.f };
+	float MaxDrivingForce{ 8000000.f };
 
 protected:
 	virtual void BeginPlay() override;
